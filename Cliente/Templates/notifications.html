@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notificações</title>
+    <script>
+        function getAuthToken() {
+            return localStorage.getItem('token');
+        }
+
+        function checkToken() {
+            const token = getAuthToken();
+            if (!token) {
+                window.location.href = '/login';
+            }
+        }
+        checkToken();
+    </script>
+</head>
+<body>
+    <h1>Notificações</h1>
+    <ul id="notification-list">
+        {% for notification in notifications %}
+        <li>{{ notification }}</li>
+        {% endfor %}
+    </ul>
+    <div>
+        {% if pagination.has_prev %}
+        <a href="{{ url_for('notifications', page=pagination.page - 1) }}">Anterior</a>
+        {% endif %}
+        {% if pagination.has_next %}
+        <a href="{{ url_for('notifications', page=pagination.page + 1) }}">Próxima</a>
+        {% endif %}
+    </div>
+</body>
+</html>

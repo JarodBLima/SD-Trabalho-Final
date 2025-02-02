@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  cliente:
+    build:
+      context: ./cliente
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ORDERS_SERVER_URL=https://servidor-pedidos:50051
+      - NOTIFICATIONS_SERVER_HOST=servidor-notificacoes
+    depends_on:
+      - servidor-pedidos
+      - servidor-notificacoes
+    networks:
+      - minha-rede
+
+  servidor-pedidos:
+    build:
+      context: ./servidor-pedidos
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    networks:
+      - minha-rede
+    depends_on:
+      - servidor-notificacoes
+      - servidor-pagamentos
+
+  servidor-notificacoes:
+    build:
+      context: ./servidor-notificacoes
+      dockerfile: Dockerfile
+    ports:
+      - "6000:6000"
+    networks:
+      - minha-rede
+
+  servidor-pagamentos:
+    build:
+      context: ./servidor-pagamentos
+      dockerfile: Dockerfile
+    ports:
+      - "1099:1099"
+      - "9090:9090"
+    networks:
+      - minha-rede
+
+networks:
+  minha-rede:
+    driver: bridge
