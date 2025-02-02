@@ -1,0 +1,73 @@
+# Gerar a chave privada da CA
+openssl genrsa -out ca.key 4096
+
+# Gerar o certificado da CA (autoassinado)
+openssl req -x509 -new -nodes -key ca.key -sha256 -days 365 -out ca.crt -subj "/CN=MyLocalCA"
+
+# Gerar a chave privada para o Cliente
+openssl genrsa -out cliente.key 4096
+
+# Gerar um CSR (Certificate Signing Request) para o Cliente
+openssl req -new -key cliente.key -out cliente.csr -subj "/CN=cliente"
+
+# Assinar o CSR do Cliente com a chave da CA (gerar o certificado do Cliente)
+openssl x509 -req -in cliente.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out cliente.crt -days 365 -sha256
+
+# Gerar a chave privada para o Servidor de Pedidos
+openssl genrsa -out servidor-pedidos.key 4096
+
+# Gerar um CSR para o Servidor de Pedidos
+openssl req -new -key servidor-pedidos.key -out servidor-pedidos.csr -subj "/CN=servidor-pedidos"
+
+# Assinar o CSR do Servidor de Pedidos com a chave da CA
+openssl x509 -req -in servidor-pedidos.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out servidor-pedidos.crt -days 365 -sha256
+
+# Gerar a chave privada para o Servidor de Notificações
+openssl genrsa -out servidor-notificacoes.key 4096
+
+# Gerar um CSR para o Servidor de Notificações
+openssl req -new -key servidor-notificacoes.key -out servidor-notificacoes.csr -subj "/CN=servidor-notificacoes"
+
+# Assinar o CSR do Servidor de Notificações com a chave da CA
+openssl x509 -req -in servidor-notificacoes.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out servidor-notificacoes.crt -days 365 -sha256
+
+# Gerar a chave privada para o Servidor de Pagamentos
+openssl genrsa -out servidor-pagamentos.key 4096
+
+# Gerar um CSR para o Servidor de Pagamentos
+openssl req -new -key servidor-pagamentos.key -out servidor-pagamentos.csr -subj "/CN=servidor-pagamentos"
+
+# Assinar o CSR do Servidor de Pagamentos com a chave da CA
+openssl x509 -req -in servidor-pagamentos.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out servidor-pagamentos.crt -days 365 -sha256
+
+
+
+Esses comandos vão gerar os seguintes arquivos:
+
+ca.key: Chave privada da CA (mantenha em segredo!).
+
+ca.crt: Certificado da CA (pode ser distribuído).
+
+cliente.key: Chave privada do Cliente.
+
+cliente.csr: CSR do Cliente (não é mais necessário).
+
+cliente.crt: Certificado do Cliente.
+
+servidor-pedidos.key: Chave privada do Servidor de Pedidos.
+
+servidor-pedidos.csr: CSR do Servidor de Pedidos (não é mais necessário).
+
+servidor-pedidos.crt: Certificado do Servidor de Pedidos.
+
+servidor-notificacoes.key: Chave privada do Servidor de Notificações.
+
+servidor-notificacoes.csr: CSR do Servidor de Notificações (não é mais necessário).
+
+servidor-notificacoes.crt: Certificado do Servidor de Notificações.
+
+servidor-pagamentos.key: Chave privada do Servidor de Pagamentos.
+
+servidor-pagamentos.csr: CSR do Servidor de Pagamentos (não é mais necessário).
+
+servidor-pagamentos.crt: Certificado do Servidor de Pagamentos.
