@@ -1,6 +1,5 @@
-grpcio==1.48.2
-protobuf==4.21.6
-grpcio-tools==1.48.2
+grpcio==1.59.3
+grpcio-tools==1.59.3
 Pyro4==4.82
 SQLAlchemy==1.4.46
 Flask-SQLAlchemy==3.0.2
