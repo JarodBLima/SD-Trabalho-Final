@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 import time
 import socket
 import json
+import os
 
 db = SQLAlchemy()
 notifications = []
@@ -17,8 +18,11 @@ def create_app(config_class=Config):
 
     db.init_app(app)
 
+    # Obter o diretório do arquivo de log a partir da configuração
+    log_file = os.path.join(app.root_path, 'logs', 'cliente.log')
+
     # Configuração de Logging
-    app.logger = setup_logger('cliente_logger', 'cliente.log', logging.DEBUG)
+    app.logger = setup_logger('cliente_logger', log_file, logging.DEBUG)  # Usar log_file
 
     # Importar as rotas
     from routes.orders import orders_bp
