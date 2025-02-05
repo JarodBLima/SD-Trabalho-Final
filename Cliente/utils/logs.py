@@ -7,7 +7,7 @@ def setup_logger(name, log_file, level=logging.INFO):
 
     # Cria o diretório de logs se não existir
     logs_dir = os.path.dirname(log_file)
-    if not os.path.exists(logs_dir):
+    if logs_dir and not os.path.exists(logs_dir):  # Verifica se logs_dir não é vazio
         os.makedirs(logs_dir)
 
     handler = logging.FileHandler(log_file)
