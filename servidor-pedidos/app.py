@@ -2,6 +2,7 @@ import grpc
 from concurrent import futures
 import time
 import logging
+import threading
 
 # Importações geradas pelo Protobuf
 import orders_pb2
